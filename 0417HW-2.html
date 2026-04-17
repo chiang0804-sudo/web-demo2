@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Web AR - Hiro & Kanji</title>
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
+  <!-- AR.js -->
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+</head>
+
+<body style="margin:0; overflow:hidden;">
+
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+
+    <!-- 第一個標記：Hiro -->
+    <a-marker preset="hiro">
+      <!-- 方塊（你喜歡的顏色） -->
+      <a-box 
+        position="0 0.5 0"
+        rotation="0 45 0"
+        color="	#FFD9EC">
+      </a-box>
+    </a-marker>
+
+    <!-- 第二個標記：Kanji -->
+    <a-marker preset="kanji">
+      <!-- 球體 -->
+      <a-sphere 
+        position="0 0.5 0"
+        radius="0.4"
+        color="#DDDDFF">
+      </a-sphere>
+    </a-marker>
+
+    <!-- 相機 -->
+    <a-entity camera></a-entity>
+
+  </a-scene>
+
+</body>
+</html>
