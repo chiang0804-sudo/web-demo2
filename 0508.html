@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Sailor Moon AR</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    a-scene {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    /* 隱藏 MindAR 預設 UI */
+    .mindar-ui-loading,
+    .mindar-ui-error,
+    .mindar-ui-scanning {
+      display: none;
+    }
+
+    /* 手機版介紹卡 */
+    #custom-text{
+      display:none;
+
+      position:fixed;
+      top:20px;
+      left:50%;
+      transform:translateX(-50%);
+
+      width:80%;
+
+      background:rgba(0,0,0,0.65);
+      color:white;
+
+      padding:16px;
+      border-radius:20px;
+
+      font-size:20px;
+      line-height:1.6;
+
+      text-align:center;
+
+      z-index:9999;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 手機上方介紹文字 -->
+  <div id="custom-text">
+    月野兔（Usagi Tsukino）<br><br>
+
+    《美少女戰士》主角。<br>
+    平時是普通女學生，<br>
+    變身後成為代表月亮力量的水手戰士。<br><br>
+
+    「我要代替月亮懲罰你！」
+  </div>
+
+  <!-- AR 場景 -->
+  <a-scene
+    mindar-image="
+      imageTargetSrc: targets.mind;
+      autoStart: true;
+      uiLoading: no;
+      uiScanning: no;
+      uiError: no;
+    "
+
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+  >
+
+    <!-- 相機 -->
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!-- 掃描目標 -->
+    <a-entity
+      mindar-image-target="targetIndex: 0"
+      id="target">
+    </a-entity>
+
+  </a-scene>
+
+  <script>
+    window.addEventListener("load", () => {
+
+      const targetEl = document.querySelector("#target");
+      const customDiv = document.querySelector("#custom-text");
+
+      // 掃描到圖片
+      targetEl.addEventListener("targetFound", () => {
+        customDiv.style.display = "block";
+      });
+
+      // 離開圖片
+      targetEl.addEventListener("targetLost", () => {
+        customDiv.style.display = "none";
+      });
+
+    });
+  </script>
+
+</body>
+</html>
